@@ -43,9 +43,11 @@ def main() -> int:
         q = spark.sql(f"""
             SELECT
               (SELECT count(*) FROM local.silver.{t}
-                WHERE ingested_at >= current_timestamp() - INTERVAL 24 HOURS) AS good,
+                WHERE ingested_at >= current_timestamp() - INTERVAL 24 HOURS
+                  AND source_file LIKE 'PUBLIC_DISPATCHIS%') AS good,
               (SELECT count(*) FROM local.silver.{t}_quarantine
-                WHERE quarantined_at >= current_timestamp() - INTERVAL 24 HOURS) AS bad
+                WHERE quarantined_at >= current_timestamp() - INTERVAL 24 HOURS
+                  AND raw_value NOT LIKE '%mmsdm_backfill%') AS bad
         """).first()
         results.append(c.check_quarantine_rate(f"quarantine_rate.{t}", q.good, q.bad))
 

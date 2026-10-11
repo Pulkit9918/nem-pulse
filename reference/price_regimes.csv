@@ -1,0 +1,51 @@
+region_id,regime,from_nem,to_nem,source
+NSW1,administered,2022/06/13 18:35:00,2022/06/14 04:00:00,APEVENT 147
+NSW1,administered,2022/06/14 04:05:00,2022/06/15 04:00:00,APEVENT 150
+NSW1,administered,2022/06/15 04:05:00,2022/06/16 04:00:00,APEVENT 154
+NSW1,administered,2022/06/16 04:05:00,2022/06/17 04:00:00,APEVENT 158
+NSW1,administered,2022/06/17 04:05:00,2022/06/18 04:00:00,APEVENT 162
+NSW1,administered,2022/06/18 04:05:00,2022/06/19 04:00:00,APEVENT 166
+NSW1,administered,2022/06/19 04:05:00,2022/06/20 04:00:00,APEVENT 170
+NSW1,administered,2022/06/20 04:05:00,2022/06/21 04:00:00,APEVENT 174
+NSW1,administered,2022/06/21 04:05:00,2022/06/22 04:00:00,APEVENT 178
+NSW1,administered,2022/06/22 04:05:00,2022/06/23 04:00:00,APEVENT 182
+NSW1,suspended_dispatch,2022/06/23 04:05:00,2022/06/24 14:00:00,AEMO notices: dispatch pricing from TI 0405 on 23 Jun; resumption at 1400 hrs on 24 Jun
+NSW1,suspended_schedule,2022/06/15 14:05:00,2022/06/23 04:00:00,AEMO notices: declaration 15 Jun 14:03 (schedule pricing from TI 1405); change of pricing regime from TI 0405 on 23 Jun
+QLD1,administered,2022/06/12 18:55:00,2022/06/13 04:00:00,APEVENT 145
+QLD1,administered,2022/06/13 04:05:00,2022/06/14 04:00:00,APEVENT 146
+QLD1,administered,2022/06/14 04:05:00,2022/06/15 04:00:00,APEVENT 151
+QLD1,administered,2022/06/15 04:05:00,2022/06/16 04:00:00,APEVENT 155
+QLD1,administered,2022/06/16 04:05:00,2022/06/17 04:00:00,APEVENT 159
+QLD1,administered,2022/06/17 04:05:00,2022/06/18 04:00:00,APEVENT 163
+QLD1,administered,2022/06/18 04:05:00,2022/06/19 04:00:00,APEVENT 167
+QLD1,administered,2022/06/19 04:05:00,2022/06/20 04:00:00,APEVENT 171
+QLD1,administered,2022/06/20 04:05:00,2022/06/21 04:00:00,APEVENT 175
+QLD1,administered,2022/06/21 04:05:00,2022/06/22 04:00:00,APEVENT 179
+QLD1,administered,2022/06/22 04:05:00,2022/06/23 04:00:00,APEVENT 183
+QLD1,suspended_dispatch,2022/06/23 04:05:00,2022/06/24 14:00:00,AEMO notices: dispatch pricing from TI 0405 on 23 Jun; resumption at 1400 hrs on 24 Jun
+QLD1,suspended_schedule,2022/06/15 14:05:00,2022/06/23 04:00:00,AEMO notices: declaration 15 Jun 14:03 (schedule pricing from TI 1405); change of pricing regime from TI 0405 on 23 Jun
+SA1,administered,2022/06/13 22:00:00,2022/06/14 04:00:00,APEVENT 148
+SA1,administered,2022/06/14 04:05:00,2022/06/15 04:00:00,APEVENT 152
+SA1,administered,2022/06/15 04:05:00,2022/06/16 04:00:00,APEVENT 156
+SA1,administered,2022/06/16 04:05:00,2022/06/17 04:00:00,APEVENT 160
+SA1,administered,2022/06/17 04:05:00,2022/06/18 04:00:00,APEVENT 164
+SA1,administered,2022/06/18 04:05:00,2022/06/19 04:00:00,APEVENT 168
+SA1,administered,2022/06/19 04:05:00,2022/06/20 04:00:00,APEVENT 172
+SA1,administered,2022/06/20 04:05:00,2022/06/21 04:00:00,APEVENT 176
+SA1,administered,2022/06/21 04:05:00,2022/06/22 04:00:00,APEVENT 180
+SA1,suspended_dispatch,2022/06/23 04:05:00,2022/06/24 14:00:00,AEMO notices: dispatch pricing from TI 0405 on 23 Jun; resumption at 1400 hrs on 24 Jun
+SA1,suspended_schedule,2022/06/15 14:05:00,2022/06/23 04:00:00,AEMO notices: declaration 15 Jun 14:03 (schedule pricing from TI 1405); change of pricing regime from TI 0405 on 23 Jun
+TAS1,suspended_dispatch,2022/06/23 04:05:00,2022/06/24 14:00:00,AEMO notices: dispatch pricing from TI 0405 on 23 Jun; resumption at 1400 hrs on 24 Jun
+TAS1,suspended_schedule,2022/06/15 14:05:00,2022/06/23 04:00:00,AEMO notices: declaration 15 Jun 14:03 (schedule pricing from TI 1405); change of pricing regime from TI 0405 on 23 Jun
+VIC1,administered,2022/06/13 22:05:00,2022/06/14 04:00:00,APEVENT 149
+VIC1,administered,2022/06/14 04:05:00,2022/06/15 04:00:00,APEVENT 153
+VIC1,administered,2022/06/15 04:05:00,2022/06/16 04:00:00,APEVENT 157
+VIC1,administered,2022/06/16 04:05:00,2022/06/17 04:00:00,APEVENT 161
+VIC1,administered,2022/06/17 04:05:00,2022/06/18 04:00:00,APEVENT 165
+VIC1,administered,2022/06/18 04:05:00,2022/06/19 04:00:00,APEVENT 169
+VIC1,administered,2022/06/19 04:05:00,2022/06/20 04:00:00,APEVENT 173
+VIC1,administered,2022/06/20 04:05:00,2022/06/21 04:00:00,APEVENT 177
+VIC1,administered,2022/06/21 04:05:00,2022/06/22 04:00:00,APEVENT 181
+VIC1,administered,2022/06/22 04:05:00,2022/06/23 04:00:00,APEVENT 184
+VIC1,suspended_dispatch,2022/06/23 04:05:00,2022/06/24 14:00:00,AEMO notices: dispatch pricing from TI 0405 on 23 Jun; resumption at 1400 hrs on 24 Jun
+VIC1,suspended_schedule,2022/06/15 14:05:00,2022/06/23 04:00:00,AEMO notices: declaration 15 Jun 14:03 (schedule pricing from TI 1405); change of pricing regime from TI 0405 on 23 Jun
