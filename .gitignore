@@ -2,3 +2,7 @@
 data/
 __pycache__/
 .env
+warehouse/
+checkpoints/
+spark-warehouse/
+metastore_db/

@@ -31,15 +31,20 @@ TOPICS = {
 }
 
 
-def load_state() -> list[str]:
+def load_state() -> str:
+    """Watermark: newest filename already published ('' if none)."""
     if STATE_PATH.exists():
-        return json.loads(STATE_PATH.read_text())["processed"]
-    return []
+        s = json.loads(STATE_PATH.read_text())
+        if "watermark" in s:
+            return s["watermark"]
+        if s.get("processed"):  # migrate the old list format
+            return max(s["processed"])
+    return ""
 
 
-def save_state(processed: list[str]) -> None:
+def save_state(watermark: str) -> None:
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STATE_PATH.write_text(json.dumps({"processed": processed[-500:]}))
+    STATE_PATH.write_text(json.dumps({"watermark": watermark}))
 
 
 def list_files(session: requests.Session) -> list[str]:
@@ -91,21 +96,20 @@ def main() -> None:
     session = requests.Session()
     session.headers["User-Agent"] = "nem-pulse/0.1 (personal portfolio project)"
 
-    processed = load_state()
-    log.info("starting; %d files already processed", len(processed))
+    watermark = load_state()
+    log.info("starting; watermark=%s", watermark or "none")
 
     while True:
         try:
             names = list_files(session)
-            if not processed:
+            if not watermark:
                 todo = names[-INITIAL_BACKFILL:]
             else:
-                seen = set(processed)
-                todo = [n for n in names if n not in seen]
+                todo = [n for n in names if n > watermark]
             for name in todo:
                 n = process_file(session, producer, name)
-                processed.append(name)
-                save_state(processed)
+                watermark = name
+                save_state(watermark)
                 log.info("published %s (%d records)", name, n)
         except Exception:
             log.exception("poll cycle failed; will retry")
