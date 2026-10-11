@@ -109,6 +109,9 @@ def run_month(spark, year: int, month: int, speed: float, timeout_min: float) ->
     label = f"{year}-{month:02d}"
     last_day, lo, hi = month_bounds(year, month)
     started = time.monotonic()
+    free_gb = shutil.disk_usage(".").free / 1e9
+    with open("data/backfill/disk_log.txt", "a", encoding="utf-8") as f:
+        f.write(f"{label} free_gb_at_start={free_gb:.2f}\n")
 
     stage_month(year, month)
     expected = staged_counts(year, month)
@@ -119,6 +122,9 @@ def run_month(spark, year: int, month: int, speed: float, timeout_min: float) ->
         check=True,
     )
     ok, got = wait_for_reconcile(spark, lo, hi, expected, timeout_min)
+    if any(got[t][2] > 0.01 * expected[t] for t in expected):
+        print(f"{label}: more than 1% of rows quarantined; treating as a failure")
+        ok = False
 
     minutes = (time.monotonic() - started) / 60
     row = {"month": label, "ok": ok, "minutes": f"{minutes:.1f}"}
