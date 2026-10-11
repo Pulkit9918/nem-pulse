@@ -5,7 +5,7 @@ import os
 import re
 import time
 import zipfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import requests
@@ -64,7 +64,7 @@ def process_file(session: requests.Session, producer: Producer, name: str) -> in
     with zipfile.ZipFile(io.BytesIO(r.content)) as z:
         text = z.read(z.namelist()[0]).decode("utf-8", errors="replace")
 
-    ingested_at = datetime.now(timezone.utc).isoformat()
+    ingested_at = datetime.now(UTC).isoformat()
     count = 0
     for table, rec in parse_mms_csv(text):
         topic = TOPICS.get(table)

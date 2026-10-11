@@ -1,7 +1,7 @@
 import csv
 import io
-from datetime import datetime, timedelta, timezone
-from typing import Iterator
+from collections.abc import Iterator
+from datetime import UTC, datetime, timedelta, timezone
 
 # NEM time is fixed AEST (UTC+10). It does NOT observe daylight saving.
 NEM_TZ = timezone(timedelta(hours=10))
@@ -30,4 +30,4 @@ def parse_mms_csv(text: str) -> Iterator[tuple[str, dict]]:
 def nem_to_utc_iso(ts: str) -> str:
     """'2026/10/11 12:25:00' (NEM time, period-ending) -> ISO-8601 UTC."""
     dt = datetime.strptime(ts, "%Y/%m/%d %H:%M:%S").replace(tzinfo=NEM_TZ)
-    return dt.astimezone(timezone.utc).isoformat()
+    return dt.astimezone(UTC).isoformat()
