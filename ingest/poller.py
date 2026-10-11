@@ -37,7 +37,7 @@ def load_state() -> str:
         s = json.loads(STATE_PATH.read_text())
         if "watermark" in s:
             return s["watermark"]
-        if s.get("processed"):  # migrate the old list format
+        if s.get("processed"):  
             return max(s["processed"])
     return ""
 
@@ -50,7 +50,6 @@ def save_state(watermark: str) -> None:
 def list_files(session: requests.Session) -> list[str]:
     r = session.get(BASE, timeout=30)
     r.raise_for_status()
-    # Fixed-width timestamps in the name, so lexical sort == chronological sort
     return sorted({m.group(0) for m in FILE_RE.finditer(r.text)})
 
 

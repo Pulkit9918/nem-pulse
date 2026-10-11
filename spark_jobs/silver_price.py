@@ -10,7 +10,7 @@ ENVELOPE = (
     "INTERVENTION:string,DISPATCHINTERVAL:string,PRICE_STATUS:string>"
 )
 REGIONS = ["NSW1", "QLD1", "SA1", "TAS1", "VIC1"]
-RRP_MIN, RRP_MAX = -1000.0, 30000.0  # floor is fixed; upper bound deliberately loose
+RRP_MIN, RRP_MAX = -1000.0, 30000.0  
 
 SILVER_DDL = """
 CREATE TABLE IF NOT EXISTS local.silver.price (
@@ -65,7 +65,7 @@ def with_reasons(df):
         F.when(~F.col("intervention").isin(0, 1) | F.col("intervention").isNull(),
                F.lit("bad_intervention")),
     )
-    return df.withColumn("reasons", reasons)  # concat_ws skips nulls -> "" when clean
+    return df.withColumn("reasons", reasons)  
 
 
 def process(batch_df, batch_id):
@@ -92,7 +92,14 @@ def process(batch_df, batch_id):
     if n_bad:
         (bad.select("kafka_topic", "kafka_partition", "kafka_offset", "raw_value",
                     "reasons", F.current_timestamp().alias("quarantined_at"))
-            .writeTo("local.silver.price_quarantine").append())
+            .createOrReplaceTempView("batch_bad"))
+        spark.sql("""
+            MERGE INTO local.silver.price_quarantine t USING batch_bad s
+            ON  t.kafka_topic = s.kafka_topic
+            AND t.kafka_partition = s.kafka_partition
+            AND t.kafka_offset = s.kafka_offset
+            WHEN NOT MATCHED THEN INSERT *
+        """)
     print(f"[silver_price] batch {batch_id}: good={good.count()} quarantined={n_bad}")
     checked.unpersist()
 
