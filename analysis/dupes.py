@@ -1,4 +1,4 @@
-from .common import get_spark
+from spark_jobs.common import get_spark
 
 spark = get_spark("dupes")
 print("bronze duplicate keys (expected > 0 after replay):")

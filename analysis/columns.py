@@ -1,7 +1,7 @@
 from pyspark.sql import functions as F
 
-from .common import get_spark
-from .silver_other import CONFIGS
+from spark_jobs.common import get_spark
+from spark_jobs.silver_other import CONFIGS
 
 spark = get_spark("columns")
 for name, cfg in CONFIGS.items():

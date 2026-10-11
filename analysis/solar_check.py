@@ -1,4 +1,4 @@
-from .common import get_spark
+from spark_jobs.common import get_spark
 
 spark = get_spark("solar_check")
 spark.sql("""
