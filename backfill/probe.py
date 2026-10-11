@@ -2,6 +2,7 @@ import io
 import zipfile
 from collections import Counter
 from pathlib import Path
+from urllib.parse import quote
 
 import requests
 
@@ -15,19 +16,41 @@ RAW = Path("data/backfill/raw")
 HEADERS = {"User-Agent": "nem-pulse/0.1 (personal portfolio project)"}
 
 
+def candidate_names(table: str, year: int, month: int) -> list[str]:
+    stamp = f"{year}{month:02d}010000"
+    return [
+        f"PUBLIC_DVD_{table}_{stamp}.zip", 
+        f"PUBLIC_ARCHIVE#{table}#FILE01#{stamp}.zip",  
+    ]
+
+
 def fetch(table: str, year: int, month: int) -> Path:
-    name = f"PUBLIC_DVD_{table}_{year}{month:02d}010000.zip"
-    path = RAW / name
-    if path.exists():
-        return path
     RAW.mkdir(parents=True, exist_ok=True)
-    url = BASE.format(y=year, m=f"{month:02d}") + name
-    with requests.get(url, headers=HEADERS, stream=True, timeout=120) as r:
-        r.raise_for_status()
-        with open(path, "wb") as f:
-            for chunk in r.iter_content(1 << 20):
+    names = candidate_names(table, year, month)
+    for name in names:
+        if (RAW / name).exists():
+            return RAW / name
+
+    base = BASE.format(y=year, m=f"{month:02d}")
+    response = None
+    for name in names:
+        response = requests.get(
+            base + quote(name, safe=""), headers=HEADERS, stream=True, timeout=120
+        )
+        if response.status_code == 404:
+            response.close()
+            continue
+        response.raise_for_status()
+        path = RAW / name
+        part = path.with_name(path.name + ".part")
+        with response, open(part, "wb") as f:
+            for chunk in response.iter_content(1 << 20):
                 f.write(chunk)
-    return path
+        part.replace(path)  
+        return path
+    raise requests.HTTPError(
+        f"{table} {year}-{month:02d}: not found as {names}", response=response
+    )
 
 
 def open_csv(path: Path):
