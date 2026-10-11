@@ -5,7 +5,9 @@ import requests
 from backfill.probe import fetch, open_csv
 from ingest.parser import parse_mms_csv
 
-MONTHS = [(2025, m) for m in range(9, 13)] + [(2026, m) for m in range(1, 9)]
+MONTHS = [(2024, m) for m in range(7, 13)] + [(2025, m) for m in range(1, 13)] + [
+    (2026, m) for m in range(1, 9)
+]
 
 
 def profile(year: int, month: int) -> str:
@@ -41,12 +43,22 @@ def profile(year: int, month: int) -> str:
     )
 
 
+def thresholds() -> None:
+    print("\nMarket price thresholds effective since mid-2024:")
+    _, fh = open_csv(fetch("MARKET_PRICE_THRESHOLDS", 2026, 8))
+    rows = [rec for _, rec in parse_mms_csv(fh) if rec["EFFECTIVEDATE"] >= "2024/07/01"]
+    for rec in sorted(rows, key=lambda r: r["EFFECTIVEDATE"]):
+        print(f"  effective {rec['EFFECTIVEDATE'][:10]}: "
+              f"VOLL {rec['VOLL']}, floor {rec['MARKETPRICEFLOOR']}")
+
+
 def main() -> None:
     for year, month in MONTHS:
         try:
             print(profile(year, month))
         except requests.HTTPError as e:
             print(f"{year}-{month:02d}: not available (HTTP {e.response.status_code})")
+    thresholds()
 
 
 if __name__ == "__main__":
